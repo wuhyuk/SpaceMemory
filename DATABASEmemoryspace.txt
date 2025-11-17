@@ -1,0 +1,115 @@
+-- 1) 데이터베이스 생성
+CREATE DATABASE memoryspace CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+drop database if exists memoryspace;
+drop table if exists users, stars, planets, planet_media, tags, planet_tags, reports, login_log;
+
+
+-- 2) 계정 생성 (원하는 이름/비밀번호로 바꿔도 됨)
+CREATE USER 'memory_user'@'localhost' IDENTIFIED BY '1234';
+
+-- 3) 권한 부여
+GRANT ALL PRIVILEGES ON memoryspace.* TO 'memory_user'@'localhost';
+FLUSH PRIVILEGES;
+
+
+-- 계정 삭제
+DROP USER 'memory_user'@'localhost';
+FLUSH PRIVILEGES;
+-- 권한 삭제
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'memory_user'@'localhost';
+FLUSH PRIVILEGES; -- 변경사항 적용
+
+-- 만든 계정이 있는지 확인
+SELECT user, host FROM mysql.user;
+
+-- 4) users 테이블 예시
+USE memoryspace;
+
+select * from users;
+select * from login_log;
+
+UPDATE users SET role = 'ADMIN' WHERE username = 'abc';
+
+CREATE TABLE users (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  username VARCHAR(50) NOT NULL UNIQUE,
+  passwordHash VARCHAR(255) NOT NULL,
+  nickname VARCHAR(50) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  liveIn VARCHAR(100),
+  role ENUM('USER','ADMIN') NOT NULL DEFAULT 'USER',
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE stars (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  userId BIGINT UNSIGNED NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  
+  PRIMARY KEY (id),
+  INDEX (userId),
+  FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE planets (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  starId BIGINT UNSIGNED NOT NULL,
+  
+  name VARCHAR(100),
+  isDeleted TINYINT(1) DEFAULT 0,
+  
+  PRIMARY KEY (id),
+  INDEX (starId),
+  FOREIGN KEY (starId) REFERENCES stars(id) ON DELETE CASCADE
+);
+
+CREATE TABLE planet_media (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  planetId BIGINT UNSIGNED NOT NULL,
+  
+  mediaType ENUM('photo','video') NOT NULL,
+  filePath VARCHAR(500) NOT NULL,
+  mimeType VARCHAR(100),
+  sizeBytes BIGINT UNSIGNED DEFAULT 0,
+  
+  PRIMARY KEY (id),
+  INDEX (planetId),
+  FOREIGN KEY (planetId) REFERENCES planets(id) ON DELETE CASCADE
+);
+
+CREATE TABLE tags (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL UNIQUE,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE planet_tags (
+  planetId BIGINT UNSIGNED NOT NULL,
+  tagId BIGINT UNSIGNED NOT NULL,
+  
+  PRIMARY KEY (planetId, tagId),
+  
+  FOREIGN KEY (planetId) REFERENCES planets(id) ON DELETE CASCADE,
+  FOREIGN KEY (tagId) REFERENCES tags(id) ON DELETE CASCADE
+);
+
+CREATE TABLE reports (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  planetId BIGINT UNSIGNED NOT NULL,
+  reporterUserId BIGINT UNSIGNED,
+  
+  reason VARCHAR(255),
+  status ENUM('new','processed') DEFAULT 'new',
+  
+  PRIMARY KEY (id),
+  
+  FOREIGN KEY (planetId) REFERENCES planets(id) ON DELETE CASCADE,
+  FOREIGN KEY (reporterUserId) REFERENCES users(id) ON DELETE SET NULL
+);
+
+CREATE TABLE login_log (
+    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id     VARCHAR(50) NOT NULL,
+    login_time  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    logout_time DATETIME NULL
+);
