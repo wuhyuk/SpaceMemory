@@ -27,8 +27,14 @@ USE memoryspace;
 
 select * from users;
 select * from login_log;
+select * from reports;
 
 UPDATE users SET role = 'ADMIN' WHERE username = 'abc';
+
+UPDATE users
+SET status = 'SUSPENDED',
+    penaltyEndAt = DATE_ADD(NOW(), INTERVAL 3 DAY)
+WHERE username = 'user01';
 
 CREATE TABLE users (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -38,6 +44,8 @@ CREATE TABLE users (
   email VARCHAR(255) NOT NULL UNIQUE,
   liveIn VARCHAR(100),
   role ENUM('USER','ADMIN') NOT NULL DEFAULT 'USER',
+  status ENUM('ACTIVE','SUSPENDED','BANNED') NOT NULL DEFAULT 'ACTIVE',
+  penaltyEndAt DATETIME NULL,
   PRIMARY KEY (id)
 );
 
@@ -95,16 +103,18 @@ CREATE TABLE planet_tags (
 
 CREATE TABLE reports (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  planetId BIGINT UNSIGNED NOT NULL,
-  reporterUserId BIGINT UNSIGNED,
-  
+  planetId BIGINT UNSIGNED NOT NULL,      -- 신고 대상 행성
+  reporterUserId BIGINT UNSIGNED,         -- 신고한 사람
+  reportedUserId BIGINT UNSIGNED,         -- 🔥 신고당한 사람 (행성 주인)
+
   reason VARCHAR(255),
   status ENUM('new','processed') DEFAULT 'new',
-  
+
   PRIMARY KEY (id),
-  
+
   FOREIGN KEY (planetId) REFERENCES planets(id) ON DELETE CASCADE,
-  FOREIGN KEY (reporterUserId) REFERENCES users(id) ON DELETE SET NULL
+  FOREIGN KEY (reporterUserId) REFERENCES users(id) ON DELETE SET NULL,
+  FOREIGN KEY (reportedUserId) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE login_log (
@@ -113,3 +123,99 @@ CREATE TABLE login_log (
     login_time  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     logout_time DATETIME NULL
 );
+
+-- ----------------------------------------------------------------------------
+INSERT INTO users (id, username, passwordHash, nickname, email, liveIn, role, status, penaltyEndAt) VALUES
+(1, 'star_admin',  'hash1', '관리자',   'admin@example.com', '서울',      'ADMIN', 'ACTIVE', NULL),
+(2, 'user_alpha',  'hash2', '알파',     'alpha@example.com', '부산',      'USER', 'ACTIVE', NULL),
+(3, 'user_beta',   'hash3', '베타',     'beta@example.com',  '대구',      'USER', 'ACTIVE', NULL),
+(4, 'user_gamma',  'hash4', '감마',     'gamma@example.com', '인천',      'USER', 'SUSPENDED', '2025-12-31 23:59:59'),
+(5, 'user_delta',  'hash5', '델타',     'delta@example.com', '대전',      'USER', 'ACTIVE', NULL),
+(6, 'user_epsilon','hash6', '엡실론',  'eps@example.com',   '광주',      'USER', 'ACTIVE', NULL),
+(7, 'user_zeta',   'hash7', '제타',     'zeta@example.com',  '울산',      'USER', 'BANNED', NULL),
+(8, 'user_eta',    'hash8', '에타',     'eta@example.com',   '세종',      'USER', 'ACTIVE', NULL),
+(9, 'user_theta',  'hash9', '세타',     'theta@example.com', '제주',      'USER', 'ACTIVE', NULL),
+(10,'user_iota',   'hash10','아이오타','iota@example.com',  '경기',      'USER', 'ACTIVE', NULL);
+
+INSERT INTO stars (id, userId, name) VALUES
+(1, 2, 'Alpha Star'),
+(2, 3, 'Beta Star'),
+(3, 4, 'Gamma Star'),
+(4, 5, 'Delta Star'),
+(5, 6, 'Epsilon Star'),
+(6, 7, 'Zeta Star'),
+(7, 8, 'Eta Star'),
+(8, 9, 'Theta Star'),
+(9, 10,'Iota Star'),
+(10,1, 'Admin Star');
+INSERT INTO planets (id, starId, name, isDeleted) VALUES
+(1, 1, 'Alpha Planet 1', 0),
+(2, 1, 'Alpha Planet 2', 0),
+(3, 2, 'Beta Planet 1', 0),
+(4, 2, 'Beta Planet 2', 1),
+(5, 3, 'Gamma Planet 1', 0),
+(6, 4, 'Delta Planet 1', 0),
+(7, 5, 'Epsilon Planet 1', 0),
+(8, 6, 'Zeta Planet 1', 0),
+(9, 7, 'Eta Planet 1', 0),
+(10,8, 'Theta Planet 1', 0),
+(11,9, 'Iota Planet 1', 0),
+(12,10,'Admin Planet 1', 0);
+INSERT INTO planet_media (id, planetId, mediaType, filePath, mimeType, sizeBytes) VALUES
+(1, 1, 'photo', '/media/p1.jpg', 'image/jpeg', 500000),
+(2, 2, 'photo', '/media/p2.jpg', 'image/jpeg', 800000),
+(3, 3, 'video', '/media/p3.mp4', 'video/mp4', 2000000),
+(4, 4, 'photo', '/media/p4.jpg', 'image/jpeg', 300000),
+(5, 5, 'photo', '/media/p5.jpg', 'image/jpeg', 600000),
+(6, 6, 'video', '/media/p6.mp4', 'video/mp4', 2500000),
+(7, 7, 'photo', '/media/p7.jpg', 'image/jpeg', 700000),
+(8, 8, 'photo', '/media/p8.jpg', 'image/jpeg', 550000),
+(9, 9, 'photo', '/media/p9.jpg', 'image/jpeg', 650000),
+(10,10,'video', '/media/p10.mp4', 'video/mp4', 1800000),
+(11,11,'photo', '/media/p11.jpg', 'image/jpeg', 750000),
+(12,12,'photo', '/media/p12.jpg', 'image/jpeg', 900000);
+INSERT INTO tags (id, name) VALUES
+(1, 'travel'),
+(2, 'food'),
+(3, 'daily'),
+(4, 'selfie'),
+(5, 'nature'),
+(6, 'family');
+INSERT INTO planet_tags (planetId, tagId) VALUES
+(1, 1),
+(1, 3),
+(2, 2),
+(3, 4),
+(4, 3),
+(5, 5),
+(6, 1),
+(7, 6),
+(8, 2),
+(9, 4),
+(10,5),
+(11,3),
+(12,6);
+INSERT INTO reports (id, planetId, reporterUserId, reportedUserId, reason, status) VALUES
+(1, 1, 3, 2, '허위 정보 포함', 'new'),
+(2, 2, 4, 2, '부적절한 내용', 'new'),
+(3, 3, 5, 3, '저작권 침해 가능성', 'processed'),
+(4, 5, 6, 4, '스팸 광고 같습니다', 'new'),
+(5, 6, 7, 5, '욕설 포함', 'processed'),
+(6, 7, 8, 6, '불쾌한 사진', 'new'),
+(7, 8, 9, 7, '도배 신고', 'new'),
+(8, 9, 10,7, '비방 내용 포함', 'processed'),
+(9, 10,2, 8, '민감한 사진 포함', 'new'),
+(10,11,3, 9, '혐오 표현 포함', 'new'),
+(11,12,4, 1, '규정 위반 의심', 'processed'),
+(12, 1, 5, 2, '중복 게시물입니다', 'new');
+INSERT INTO login_log (id, user_id, login_time, logout_time) VALUES
+(1, 'user_alpha', '2025-01-12 10:00:00', '2025-01-12 11:00:00'),
+(2, 'user_beta',  '2025-01-12 11:00:00', '2025-01-12 12:00:00'),
+(3, 'user_gamma', '2025-01-12 13:00:00', NULL),
+(4, 'user_delta', '2025-01-13 09:00:00', '2025-01-13 09:20:00'),
+(5, 'user_epsilon','2025-01-13 10:30:00', NULL),
+(6, 'user_zeta',  '2025-01-14 08:10:00', NULL),
+(7, 'user_eta',   '2025-01-14 09:50:00', '2025-01-14 10:00:00'),
+(8, 'user_theta', '2025-01-14 11:00:00', '2025-01-14 12:30:00'),
+(9, 'user_iota',  '2025-01-15 15:30:00', NULL),
+(10,'star_admin', '2025-01-15 18:00:00', '2025-01-15 19:00:00');
