@@ -1,0 +1,134 @@
+-- 1) 데이터베이스 생성
+CREATE DATABASE memoryspace CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+drop database if exists memoryspace;
+drop table if exists users, stars, planets, planet_media, tags, planet_tags, reports, login_log;
+
+-- 2) 계정 생성 (원하는 이름/비밀번호로 바꿔도 됨)
+CREATE USER 'memory_user'@'localhost' IDENTIFIED BY '1234';
+
+-- 3) 권한 부여
+GRANT ALL PRIVILEGES ON memoryspace.* TO 'memory_user'@'localhost';
+FLUSH PRIVILEGES;
+ALTER USER 'memory_user'@'localhost' IDENTIFIED WITH mysql_native_password BY '1234';
+
+-- 계정 삭제
+DROP USER 'memory_user'@'localhost';
+FLUSH PRIVILEGES;
+-- 권한 삭제
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'memory_user'@'localhost';
+FLUSH PRIVILEGES; -- 변경사항 적용
+
+-- 만든 계정이 있는지 확인
+SELECT user, host FROM mysql.user;
+
+-- 4) users 테이블 예시
+USE memoryspace;
+
+select * from users;
+select * from login_log;
+select * from reports;
+select * from planets;
+
+UPDATE users SET role = 'ADMIN' WHERE username = 'abc';
+
+UPDATE users
+SET status = 'SUSPENDED',
+    penaltyEndAt = DATE_ADD(NOW(), INTERVAL 3 DAY)
+WHERE username = 'user01';
+
+CREATE TABLE users (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  username VARCHAR(50) NOT NULL UNIQUE,
+  passwordHash VARCHAR(255) NOT NULL,
+  nickname VARCHAR(50) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  liveIn VARCHAR(100),
+  role ENUM('USER','ADMIN') NOT NULL DEFAULT 'USER',
+  status ENUM('ACTIVE','SUSPENDED','BANNED') NOT NULL DEFAULT 'ACTIVE',
+  penaltyEndAt DATETIME NULL,
+  reportCount BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE stars (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  userId BIGINT UNSIGNED NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  
+  PRIMARY KEY (id),
+  INDEX (userId),
+  FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE planets (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  starId BIGINT UNSIGNED NOT NULL,
+  
+  name VARCHAR(100),
+  isDeleted TINYINT(1) DEFAULT 0,
+  
+  PRIMARY KEY (id),
+  INDEX (starId),
+  FOREIGN KEY (starId) REFERENCES stars(id) ON DELETE CASCADE
+);
+
+CREATE TABLE planet_media (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  planetId BIGINT UNSIGNED NOT NULL,
+  
+  mediaType ENUM('photo','video') NOT NULL,
+  filePath VARCHAR(500) NOT NULL,
+  mimeType VARCHAR(100),
+  sizeBytes BIGINT UNSIGNED DEFAULT 0,
+  
+  -- ⭐️ 추가된 컬럼 (Upload 시점 기록)
+  uploadDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+  
+  -- ⭐️ 추가된 컬럼 (지오코딩 관련)
+  locationName VARCHAR(255) NULL,
+  latitude DOUBLE NULL,
+  longitude DOUBLE NULL,
+  
+  PRIMARY KEY (id),
+  INDEX (planetId),
+  FOREIGN KEY (planetId) REFERENCES planets(id) ON DELETE CASCADE
+);
+
+CREATE TABLE tags (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL UNIQUE,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE planet_tags (
+  planetId BIGINT UNSIGNED NOT NULL,
+  tagId BIGINT UNSIGNED NOT NULL,
+  
+  PRIMARY KEY (planetId, tagId),
+  
+  FOREIGN KEY (planetId) REFERENCES planets(id) ON DELETE CASCADE,
+  FOREIGN KEY (tagId) REFERENCES tags(id) ON DELETE CASCADE
+);
+
+CREATE TABLE reports (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  planetId BIGINT UNSIGNED NOT NULL,      -- 신고 대상 행성
+  reporterUserId BIGINT UNSIGNED,         -- 신고한 사람
+  reportedUserId BIGINT UNSIGNED,         -- 🔥 신고당한 사람 (행성 주인)
+
+  reason VARCHAR(255),
+  status ENUM('new','processed') DEFAULT 'new',
+
+  PRIMARY KEY (id),
+
+  FOREIGN KEY (planetId) REFERENCES planets(id) ON DELETE CASCADE,
+  FOREIGN KEY (reporterUserId) REFERENCES users(id) ON DELETE SET NULL,
+  FOREIGN KEY (reportedUserId) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE login_log (
+    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id     VARCHAR(50) NOT NULL,
+    login_time  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    logout_time DATETIME NULL
+);
