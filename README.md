@@ -4,7 +4,6 @@
 
 | File Name | Description |
 |----------|-------------|
-| WuhyukFile.zip | Wuhyuk's code |
 | Unity_Site.zip | Collection of React files |
 | planets.zip | Planet code file |
 | MemorySpace.zip | Java project |
