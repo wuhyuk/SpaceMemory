@@ -1,0 +1,253 @@
+/* BlackHole.css */
+
+/* 전체 래퍼: 화면 중앙 정렬용 (원하면 position 변경해서 배치 가능) */
+.bh-wrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* 바깥쪽 은은한 광채 (배경과 살짝 섞이는 정도) */
+.bh-orbit-glow {
+  position: absolute;
+  width: min(80vw, 80vh);
+  height: min(80vw, 80vh);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle,
+      rgba(255, 255, 255, 0.06) 0%,
+      rgba(210, 230, 255, 0.04) 35%,
+      transparent 70%);
+  filter: blur(6px);
+  opacity: 0.7;
+  animation: bh-orbit-pulse 22s ease-in-out infinite;
+}
+
+@keyframes bh-orbit-pulse {
+  0% {
+    transform: scale(0.9) rotate(0deg);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.05) rotate(8deg);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(0.9) rotate(0deg);
+    opacity: 0.5;
+  }
+}
+
+/* 블랙홀 메인 컨테이너 */
+.bh-container {
+  position: relative;
+  width: var(--bh-size, 380px);
+  height: var(--bh-size, 380px);
+  transform-style: preserve-3d;
+  animation: bh-slow-drift 40s linear infinite;
+}
+
+@keyframes bh-slow-drift {
+  0% {
+    transform: rotate(0deg) translateY(0px);
+  }
+  50% {
+    transform: rotate(6deg) translateY(-3px);
+  }
+  100% {
+    transform: rotate(0deg) translateY(0px);
+  }
+}
+
+/* ====== 수평 디스크 (가운데 하얀 선) ====== */
+
+/* 메인 디스크 – 얇고 강한 수평선 */
+.bh-disk-main {
+  position: absolute;
+  inset: 50%;
+  width: 220%;
+  height: 220%;
+  transform: translate(-50%, -50%) scaleY(0.22);
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 50% 50%,
+      rgba(255, 255, 255, 0.0) 32%,
+      rgba(255, 255, 255, 0.85) 45%,
+      rgba(255, 255, 255, 1) 53%,
+      rgba(240, 245, 255, 0.90) 60%,
+      rgba(200, 215, 255, 0.25) 75%,
+      rgba(40, 50, 80, 0.0) 100%);
+  filter:
+    blur(1.2px)
+    drop-shadow(0 0 22px rgba(255, 255, 255, 0.95))
+    drop-shadow(0 0 40px rgba(220, 235, 255, 0.9));
+  mix-blend-mode: screen;
+  opacity: 0.98;
+  animation: bh-disk-main-flow 26s linear infinite;
+  z-index: 1; /* 코어보다 뒤 */
+}
+
+@keyframes bh-disk-main-flow {
+  0% {
+    transform: translate(-50%, -50%) scaleY(0.22) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) scaleY(0.22) rotate(360deg);
+  }
+}
+
+/* 디스크의 바깥쪽 희미한 꼬리 */
+.bh-disk-halo {
+  position: absolute;
+  inset: 50%;
+  width: 260%;
+  height: 260%;
+  transform: translate(-50%, -50%) scaleY(0.26);
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 50% 50%,
+      rgba(255, 255, 255, 0.0) 35%,
+      rgba(255, 255, 255, 0.35) 55%,
+      rgba(230, 240, 255, 0.3) 70%,
+      rgba(150, 180, 255, 0.15) 82%,
+      rgba(30, 40, 70, 0.0) 100%);
+  filter:
+    blur(5px)
+    drop-shadow(0 0 30px rgba(230, 240, 255, 0.9));
+  mix-blend-mode: screen;
+  opacity: 0.8;
+  animation: bh-disk-halo-pulse 18s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes bh-disk-halo-pulse {
+  0%, 100% {
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scaleY(0.25);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scaleY(0.29);
+  }
+}
+
+/* ====== 중심 블랙홀 + 링들 ====== */
+
+/* 완전히 어두운 코어 (이벤트 호라이즌) */
+.bh-core {
+  position: absolute;
+  inset: 50%;
+  width: 58%;
+  height: 58%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #050509 0%, #000000 55%, #000000 100%);
+  box-shadow:
+    0 0 18px rgba(0, 0, 0, 1),
+    0 0 40px rgba(0, 0, 0, 1);
+  z-index: 3;
+}
+
+/* 포톤 링: 코어 바로 바깥의 얇은 하얀 링 */
+.bh-photon-ring {
+  position: absolute;
+  inset: 50%;
+  width: 88%;
+  height: 88%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle,
+      rgba(255, 255, 255, 0.0) 60%,
+      rgba(255, 255, 255, 1) 72%,
+      rgba(240, 245, 255, 0.0) 82%);
+  filter:
+    blur(1px)
+    drop-shadow(0 0 20px rgba(255, 255, 255, 0.95));
+  animation: bh-photon-shimmer 5s ease-in-out infinite;
+  z-index: 4;
+}
+
+@keyframes bh-photon-shimmer {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.9;
+  }
+  45% {
+    transform: translate(-50%, -50%) scale(1.03);
+    opacity: 1;
+  }
+}
+
+/* 거대한 하얀 렌즈 링 (위/아래 대칭으로 감싸는 부분) */
+.bh-lens-ring {
+  position: absolute;
+  inset: 50%;
+  width: 150%;
+  height: 150%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle,
+      rgba(255, 255, 255, 0.15) 30%,
+      rgba(255, 255, 255, 0.65) 50%,
+      rgba(235, 240, 255, 0.45) 60%,
+      rgba(200, 220, 255, 0.1) 75%,
+      rgba(0, 0, 0, 0.0) 100%);
+  filter:
+    blur(6px)
+    drop-shadow(0 0 40px rgba(255, 255, 255, 0.95));
+  opacity: 0.95;
+  mix-blend-mode: screen;
+  animation: bh-lens-pulse 10s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes bh-lens-pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1.0);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.07);
+    opacity: 1;
+  }
+}
+
+/* 전체 글로우 – 더 넓게 퍼지는 희미한 빛 */
+.bh-glow {
+  position: absolute;
+  inset: 50%;
+  width: 170%;
+  height: 170%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(220, 235, 255, 0.14) 35%,
+      rgba(150, 180, 255, 0.08) 60%,
+      transparent 100%);
+  filter:
+    blur(8px)
+    drop-shadow(0 0 50px rgba(230, 240, 255, 0.9));
+  opacity: 0.9;
+  mix-blend-mode: screen;
+  animation: bh-glow-flicker 4s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes bh-glow-flicker {
+  0%, 100% {
+    opacity: 0.85;
+    transform: translate(-50%, -50%) scale(1.0);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+}

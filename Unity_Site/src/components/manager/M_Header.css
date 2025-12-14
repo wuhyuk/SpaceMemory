@@ -1,0 +1,37 @@
+/* manager/M_Header.css - 푸른빛 다크 톤 (통일) */
+
+.m-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* 헤더 배경: #212B36 */
+  background-color: #212B36; 
+  padding: 15px 20px;
+  color: white;
+  position: sticky; /* 헤더 상단 고정 */
+  top: 0;
+  z-index: 100; /* 다른 요소 위에 표시 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
+}
+
+.m-logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: white;
+}
+
+.m-logout {
+  padding: 8px 15px;
+  /* 버튼 기본 색상: #3E4C5F */
+  background-color: #3E4C5F; 
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.m-logout:hover {
+  /* 버튼 호버 색상: #546A83 */
+  background-color: #546A83;
+}

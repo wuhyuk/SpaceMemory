@@ -1,0 +1,212 @@
+/* 회원가입 페이지 전체 래퍼 (블랙홀 포함) */
+
+.signup-page-root {
+  position: relative;
+  /* 헤더 제외한 나머지 화면 높이만큼만 차지하고, 그 안에서만 스크롤 */
+  height: calc(100vh - 70px);
+  min-height: 0;
+  overflow-y: auto;      /* ✅ 이 div 안에서 세로 스크롤 허용 */
+  overflow-x: hidden;
+}
+
+
+/* 기존에 있던 signup-page-container는 z-index만 확실히 주면 됨 */
+.signup-page-container {
+  position: relative;
+  z-index: 10;  /* 블랙홀보다 위 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+
+/* ⭐ 수정: 폼 상자 크기를 Login과 유사하게 반응형으로 조정 */
+.signup-form-box {
+    background: rgba(10, 5, 30, 0.658); 
+    border-radius: 16px;
+    padding: clamp(25px, 5vw, 40px);
+    width: 60%; /* 화면 너비에 대한 비율을 90%로 수정 (원래 65%에서 변경) */
+    height: 100%; /* 부모 컨테이너(.signup-page-container)의 높이를 따름 */
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; 
+}
+
+.signup-form-box h2 {
+  text-align: center;
+  color: #9a9aff;
+  margin-bottom: 30px;
+  font-size: 2rem;
+  text-shadow: 0 0 6px #7b7bff;
+}
+
+/* 폼 그룹 (Login.css와 동일한 스타일로 통일) */
+.form-group {
+  margin-bottom: 30px;
+}
+
+.signup-form-box form {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #c9c9ff;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(123, 123, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(0, 0, 10, 0.7);
+  color: #e0e0f8;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #7b7bff;
+  box-shadow: 0 0 8px rgba(123, 123, 255, 0.8);
+  outline: none;
+}
+
+.signup-button {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(45deg, #4d4dff, #7b7bff);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20%;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+  box-shadow: 0 4px 15px rgba(77, 77, 255, 0.4);
+  flex-shrink: 0;
+}
+
+.signup-button:hover {
+  background: linear-gradient(45deg, #6f6fff, #9a9aff);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(77, 77, 255, 0.6);
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 0.9rem;
+  color: #a0a0c8;
+}
+
+.login-link a {
+  color: #7b7bff;
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 5px;
+  transition: color 0.2s;
+}
+
+.login-link a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* 작은 화면 (모바일) 대응 */
+@media (max-width: 600px) {
+  .signup-form-box {
+    padding: 30px 25px;
+  }
+}
+
+.signup-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(77, 77, 255, 0.8);
+}
+
+.login-link a:active {
+color: #c9c9ff;
+text-decoration: underline;
+}
+
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(123, 123, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(0, 0, 10, 0.7);
+  color: #e0e0f8;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group select:focus {
+  border-color: #7b7bff;
+  box-shadow: 0 0 8px rgba(123, 123, 255, 0.8);
+  outline: none;
+}
+
+.email-input-group {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* 요소들 사이의 간격 */
+}
+
+.at-symbol {
+    font-size: 1rem;
+    color: #c9c9ff;
+    font-weight: bold;
+    /* 세로 중앙 정렬을 위해 padding-top을 조정할 수도 있음 */
+}
+
+.email-id-input {
+    flex: 4; /* 전체 공간 중 4만큼 차지 */
+    min-width: 0; /* Flexbox 내에서 크기가 줄어들도록 허용 */
+}
+
+.email-domain-input {
+    flex: 4; 
+}
+
+.email-domain-select {
+    flex: 4;
+    padding: 12px;
+    border: 1px solid rgba(123, 123, 255, 0.3);
+    border-radius: 8px;
+    background: rgba(0, 0, 10, 0.7);
+    color: #e0e0f8;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.email-domain-select:focus {
+    border-color: #7b7bff;
+    box-shadow: 0 0 8px rgba(123, 123, 255, 0.8);
+    outline: none;
+}
+
+/* ✅ 인라인 에러 메시지 */
+.field-error {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: #ff6b6b;
+  font-weight: 700;
+}
+
+/* ✅ 폼 전체 에러 메시지 */
+.form-error {
+  margin: 10px 0 6px 0;
+  font-size: 0.9rem;
+  color: #ff6b6b;
+  font-weight: 700;
+  text-align: center;
+}

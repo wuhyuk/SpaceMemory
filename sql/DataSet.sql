@@ -1,0 +1,252 @@
+/* =========================================================
+   seed.sql (Refactored DDL compatible)
+   - Based on previous dataset (DataSet.txt)
+   - Run AFTER schema/DDL created
+   ========================================================= */
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- -----------------------------
+-- 0) (선택) 기존 데이터 비우기
+-- -----------------------------
+TRUNCATE TABLE media_reports;
+TRUNCATE TABLE media_favorites;
+TRUNCATE TABLE media_likes;
+TRUNCATE TABLE media_tags;
+TRUNCATE TABLE planet_tags;
+TRUNCATE TABLE tags;
+TRUNCATE TABLE planet_media;
+TRUNCATE TABLE planets;
+TRUNCATE TABLE stars;
+TRUNCATE TABLE login_log;
+TRUNCATE TABLE users;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- -----------------------------
+-- 1) users (10명)
+-- -----------------------------
+INSERT INTO users (id, username, passwordHash, nickname, email, liveIn, role, status, penaltyEndAt, reportCount)
+VALUES
+(1,  'alpha',   '1234',  'Alpha',   'alpha@mail.com',   'Seoul',   'USER',  'ACTIVE',    NULL,         0),
+(2,  'bravo',   'hash2',  'Bravo',   'bravo@mail.com',   'Busan',   'USER',  'ACTIVE',    NULL,         1),
+(3,  'charlie', 'hash3',  'Charlie', 'charlie@mail.com', 'Daegu',   'USER',  'SUSPENDED', '2025-12-31', 3),
+(4,  'delta',   'hash4',  'Delta',   'delta@mail.com',   'Incheon', 'USER',  'ACTIVE',    NULL,         0),
+(5,  'echo',    '1234',  'Echo',    'echo@mail.com',    'Seoul',   'ADMIN', 'ACTIVE',    NULL,         0),
+(6,  'foxtrot', 'hash6',  'Foxtrot', 'foxtrot@mail.com', 'Seoul',   'USER',  'ACTIVE',    NULL,         2),
+(7,  'golf',    'hash7',  'Golf',    'golf@mail.com',    'Busan',   'USER',  'BANNED',    NULL,         5),
+(8,  'hotel',   'hash8',  'Hotel',   'hotel@mail.com',   'Jeju',    'USER',  'ACTIVE',    NULL,         0),
+(9,  'india',   'hash9',  'India',   'india@mail.com',   'Seoul',   'USER',  'ACTIVE',    NULL,         1),
+(10, 'juliet',  'hash10', 'Juliet',  'juliet@mail.com',  'Daejeon', 'USER',  'ACTIVE',    NULL,         0);
+
+-- -----------------------------
+-- 2) stars (10개)
+-- -----------------------------
+INSERT INTO stars (id, userId, name)
+VALUES
+(1,  1,  'Alpha Star'),
+(2,  2,  'Bravo Star'),
+(3,  3,  'Charlie Star'),
+(4,  4,  'Delta Star'),
+(5,  5,  'Echo Star'),
+(6,  6,  'Foxtrot Star'),
+(7,  7,  'Golf Star'),
+(8,  8,  'Hotel Star'),
+(9,  9,  'India Star'),
+(10, 10, 'Juliet Star');
+
+-- -----------------------------
+-- 3) planets (10개 + 3개 추가 세트)
+--   - thumbnailMediaId는 media insert 후 UPDATE로 채움
+-- -----------------------------
+INSERT INTO planets (id, starId, name, thumbnailMediaId, sortOrder, isDeleted, deletedAt)
+VALUES
+(1,  1,  'Planet Alpha-1',    NULL, 0, 0, NULL),
+(2,  2,  'Planet Bravo-1',    NULL, 0, 0, NULL),
+(3,  3,  'Planet Charlie-1',  NULL, 0, 0, NULL),
+(4,  4,  'Planet Delta-1',    NULL, 0, 1, NOW()),  -- 삭제된 행성(soft delete)
+(5,  5,  'Planet Echo-1',     NULL, 0, 0, NULL),
+(6,  6,  'Planet Foxtrot-1',  NULL, 0, 0, NULL),
+(7,  7,  'Planet Golf-1',     NULL, 0, 0, NULL),
+(8,  8,  'Planet Hotel-1',    NULL, 0, 0, NULL),
+(9,  9,  'Planet India-1',    NULL, 0, 0, NULL),
+(10, 10, 'Planet Juliet-1',   NULL, 0, 0, NULL),
+
+-- 기존 테스트 데이터(“test 유저의 여행 행성”)를 동일한 user(1) 기준으로 확장
+(11, 1, 'Seoul 여행',  NULL, 1, 0, NULL),
+(12, 1, 'Paris 추억',  NULL, 2, 0, NULL),
+(13, 1, 'Tokyo 방문',  NULL, 3, 0, NULL);
+
+-- -----------------------------
+-- 4) planet_media
+--   - 기존: mediaType(photo/video), filePath -> 현재: type(image/video), url
+--   - description/locationName/lat/long 추가
+-- -----------------------------
+INSERT INTO planet_media
+(id, planetId, type, url, originalName, mimeType, sizeBytes, description, locationName, latitude, longitude, isDeleted)
+VALUES
+-- 각 행성 대표 1장(기존 10개)
+(1,  1,  'image', '/uploads/alpha1.jpg',   'alpha1.jpg',   'image/jpeg', 150000, 'Alpha 대표 이미지',   NULL, NULL, NULL, 0),
+(2,  2,  'image', '/uploads/bravo1.jpg',   'bravo1.jpg',   'image/jpeg', 120000, 'Bravo 대표 이미지',   NULL, NULL, NULL, 0),
+(3,  3,  'image', '/uploads/charlie1.jpg', 'charlie1.jpg', 'image/jpeg',  90000, 'Charlie 대표 이미지', NULL, NULL, NULL, 0),
+(4,  4,  'image', '/uploads/delta1.jpg',   'delta1.jpg',   'image/jpeg', 110000, 'Delta 대표 이미지',   NULL, NULL, NULL, 0),
+(5,  5,  'image', '/uploads/echo1.jpg',    'echo1.jpg',    'image/jpeg',  80000, 'Echo 대표 이미지',    NULL, NULL, NULL, 0),
+(6,  6,  'image', '/uploads/foxtrot1.jpg', 'foxtrot1.jpg', 'image/jpeg',  70000, 'Foxtrot 대표 이미지', NULL, NULL, NULL, 0),
+(7,  7,  'image', '/uploads/golf1.jpg',    'golf1.jpg',    'image/jpeg', 100000, 'Golf 대표 이미지',    NULL, NULL, NULL, 0),
+(8,  8,  'image', '/uploads/hotel1.jpg',   'hotel1.jpg',   'image/jpeg',  95000, 'Hotel 대표 이미지',   NULL, NULL, NULL, 0),
+(9,  9,  'image', '/uploads/india1.jpg',   'india1.jpg',   'image/jpeg',  85000, 'India 대표 이미지',   NULL, NULL, NULL, 0),
+(10, 10, 'image', '/uploads/juliet1.jpg',  'juliet1.jpg',  'image/jpeg', 130000, 'Juliet 대표 이미지',  NULL, NULL, NULL, 0),
+
+-- Seoul 여행 (planetId=11)
+(101, 11, 'image', '/uploads/seoul1.jpg',        'seoul1.jpg',       'image/jpeg',  2048576, 'Seoul 여행 사진 1', 'Seoul, South Korea',  37.5665, 126.9780, 0),
+(102, 11, 'image', '/uploads/seoul2.jpg',        'seoul2.jpg',       'image/jpeg',  3145728, 'Seoul 여행 사진 2', 'Gangnam, Seoul',      37.5665, 126.9780, 0),
+(103, 11, 'video', '/uploads/seoul_tour.mp4',    'seoul_tour.mp4',   'video/mp4',  15728640, 'Seoul 여행 영상',   'Myeongdong, Seoul',    37.5665, 126.9780, 0),
+
+-- Paris 추억 (planetId=12)
+(201, 12, 'image', '/uploads/paris1.jpg',        'paris1.jpg',       'image/jpeg',  4194304, 'Paris 사진 1',      'Paris, France',        35.1796, 129.0756, 0),
+(202, 12, 'image', '/uploads/eiffel.jpg',        'eiffel.jpg',       'image/jpeg',  5242880, '에펠탑',            'Eiffel Tower, Paris',  35.1796, 129.0756, 0),
+(203, 12, 'video', '/uploads/louvre.mp4',        'louvre.mp4',       'video/mp4',  20971520, '루브르 영상',       'Louvre Museum, Paris', 33.4996, 126.5312, 0),
+
+-- Tokyo 방문 (planetId=13)
+(301, 13, 'image', '/uploads/tokyo1.jpg',        'tokyo1.jpg',       'image/jpeg',  3670016, 'Tokyo 사진 1',      'Tokyo, Japan',         33.4996, 126.5312, 0),
+(302, 13, 'image', '/uploads/shibuya.jpg',       'shibuya.jpg',      'image/jpeg',  4718592, '시부야',            'Shibuya, Tokyo',       37.7519, 128.8761, 0),
+(303, 13, 'video', '/uploads/tokyo_tower.mp4',   'tokyo_tower.mp4',  'video/mp4',  18874368, '도쿄타워 영상',      'Tokyo Tower',           35.8562, 129.2247, 0),
+
+-- 추가 도시(기존 데이터의 “다른 도시들”을 planetId에 맞춰 배치)
+(401, 11, 'image', '/uploads/newyork.jpg',       'newyork.jpg',      'image/jpeg',  3500000, 'NYC 스냅샷',        'New York City, USA',   40.7128, -74.0060, 0),
+(402, 12, 'image', '/uploads/london.jpg',        'london.jpg',       'image/jpeg',  4200000, 'London 스냅샷',     'London, UK',           40.7128, -74.0060, 0),
+(403, 13, 'image', '/uploads/sydney.jpg',        'sydney.jpg',       'image/jpeg',  3800000, 'Sydney 스냅샷',     'Sydney, Australia',    40.7128, -74.0060, 0);
+
+-- -----------------------------
+-- 5) planets.thumbnailMediaId 채우기
+--   - 대표 미디어 1개씩 지정
+-- -----------------------------
+UPDATE planets SET thumbnailMediaId = 1   WHERE id = 1;
+UPDATE planets SET thumbnailMediaId = 2   WHERE id = 2;
+UPDATE planets SET thumbnailMediaId = 3   WHERE id = 3;
+UPDATE planets SET thumbnailMediaId = 4   WHERE id = 4;
+UPDATE planets SET thumbnailMediaId = 5   WHERE id = 5;
+UPDATE planets SET thumbnailMediaId = 6   WHERE id = 6;
+UPDATE planets SET thumbnailMediaId = 7   WHERE id = 7;
+UPDATE planets SET thumbnailMediaId = 8   WHERE id = 8;
+UPDATE planets SET thumbnailMediaId = 9   WHERE id = 9;
+UPDATE planets SET thumbnailMediaId = 10  WHERE id = 10;
+
+UPDATE planets SET thumbnailMediaId = 101 WHERE id = 11; -- Seoul 여행 대표
+UPDATE planets SET thumbnailMediaId = 201 WHERE id = 12; -- Paris 추억 대표
+UPDATE planets SET thumbnailMediaId = 301 WHERE id = 13; -- Tokyo 방문 대표
+
+-- -----------------------------
+-- 6) tags (10개)
+-- -----------------------------
+INSERT INTO tags (id, name)
+VALUES
+(1,  'Space'),
+(2,  'Diary'),
+(3,  'Life'),
+(4,  'Photo'),
+(5,  'Travel'),
+(6,  'Food'),
+(7,  'Memory'),
+(8,  'Nature'),
+(9,  'Art'),
+(10, 'Daily');
+
+-- -----------------------------
+-- 7) planet_tags (기존 1:1 + 여행행성 태그 추가)
+-- -----------------------------
+INSERT INTO planet_tags (planetId, tagId)
+VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5),
+(6, 6),
+(7, 7),
+(8, 8),
+(9, 9),
+(10,10),
+
+-- 여행행성(테스트 확장)
+(11, 5),  -- Travel
+(11, 4),  -- Photo
+(12, 5),  -- Travel
+(12, 9),  -- Art
+(13, 5),  -- Travel
+(13, 10); -- Daily
+
+-- -----------------------------
+-- 8) media_tags (프론트 "미디어 단위 태그" 지원)
+--   - 대표적으로 여행 미디어에 태그 부여
+-- -----------------------------
+INSERT INTO media_tags (mediaId, tagId)
+VALUES
+(101, 5), (101, 4), (101, 7),  -- seoul1: Travel/Photo/Memory
+(103, 5), (103, 10),           -- seoul video: Travel/Daily
+(201, 5), (201, 4),            -- paris1: Travel/Photo
+(202, 9), (202, 4),            -- eiffel: Art/Photo
+(301, 5), (301, 4),            -- tokyo1: Travel/Photo
+(302, 10), (302, 4);           -- shibuya: Daily/Photo
+
+-- -----------------------------
+-- 9) login_log (기존 user_id 문자열 → userId FK로 변환)
+--   - 기존 의미를 최대한 살려 매핑
+-- -----------------------------
+INSERT INTO login_log (id, userId, loginTime, logoutTime)
+VALUES
+(1,  1,  '2025-01-12 10:00:00', '2025-01-12 11:00:00'),
+(2,  2,  '2025-01-12 11:00:00', '2025-01-12 12:00:00'),
+(3,  3,  '2025-01-12 13:00:00', NULL),
+(4,  4,  '2025-01-13 09:00:00', '2025-01-13 09:20:00'),
+(5,  5,  '2025-01-13 10:30:00', NULL),
+(6,  6,  '2025-01-14 08:10:00', NULL),
+(7,  7,  '2025-01-14 09:50:00', '2025-01-14 10:00:00'),
+(8,  8,  '2025-01-14 11:00:00', '2025-01-14 12:30:00'),
+(9,  9,  '2025-01-15 15:30:00', NULL),
+(10, 5,  '2025-01-15 18:00:00', '2025-01-15 19:00:00'); -- star_admin ~= ADMIN(5)로 매핑
+
+-- -----------------------------
+-- 10) media_reports (기존 reports: planet 단위 → 리팩토링: media 단위)
+--   - 기존 planetId(1..10)의 "대표 미디어"로 신고를 옮김
+-- -----------------------------
+INSERT INTO media_reports
+(id, mediaId, reporterUserId, reason, status, createdAt, processedAt, processedByUserId)
+VALUES
+(1,  1,  2,  '욕설 포함 메시지',        'new',       NOW(), NULL, NULL),
+(2,  2,  3,  '부적절한 이미지',        'new',       NOW(), NULL, NULL),
+(3,  3,  4,  '스팸성 내용 반복',        'processed', NOW(), NOW(), 5),
+(4,  4,  5,  '저작권 위반 가능성',      'new',       NOW(), NULL, NULL),
+(5,  5,  6,  '불쾌감을 주는 표현',      'processed', NOW(), NOW(), 5),
+(6,  6,  7,  '광고 목적의 글',          'new',       NOW(), NULL, NULL),
+(7,  7,  8,  '욕설 및 비방',            'processed', NOW(), NOW(), 5),
+(8,  8,  9,  '부적절한 사진 포함',      'new',       NOW(), NULL, NULL),
+(9,  9,  10, '스팸 메시지 발송',        'processed', NOW(), NOW(), 5),
+(10, 10, 1,  '무단 도용 의심',          'new',       NOW(), NULL, NULL);
+
+-- -----------------------------
+-- 11) media_likes / media_favorites (샘플)
+-- -----------------------------
+INSERT INTO media_likes (mediaId, userId, createdAt)
+VALUES
+(101, 2, NOW()),
+(101, 3, NOW()),
+(202, 1, NOW()),
+(302, 9, NOW());
+
+INSERT INTO media_favorites (mediaId, userId, createdAt)
+VALUES
+(103, 1, NOW()),
+(202, 5, NOW()),
+(301, 2, NOW());
+
+-- -----------------------------
+-- 12) AUTO_INCREMENT 정리(선택)
+-- -----------------------------
+ALTER TABLE users        AUTO_INCREMENT = 1000;
+ALTER TABLE stars        AUTO_INCREMENT = 1000;
+ALTER TABLE planets      AUTO_INCREMENT = 1000;
+ALTER TABLE planet_media AUTO_INCREMENT = 1000;
+ALTER TABLE tags         AUTO_INCREMENT = 1000;
+ALTER TABLE login_log    AUTO_INCREMENT = 1000;
+ALTER TABLE media_reports AUTO_INCREMENT = 1000;

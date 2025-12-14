@@ -1,0 +1,190 @@
+/* src/components/etcView/Example.css */
+/* Example page - enhanced aesthetics while preserving existing layout/behavior */
+
+:root {
+  --bg-dark-gray: #15161a;
+  --text-primary: #FFFFFF;
+  --text-secondary: #C9CDD3;
+  --container-dark: rgba(28, 30, 36, 0.78);
+  --border-gray: rgba(255, 255, 255, 0.10);
+
+  --accent: rgba(140, 170, 255, 0.9);
+  --accent-soft: rgba(140, 170, 255, 0.25);
+
+  --shadow-strong: 0 14px 28px rgba(0, 0, 0, 0.55);
+  --shadow-soft: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* 1. Page layout */
+.example-page-wrapper {
+  background:
+    radial-gradient(1200px 700px at 15% 10%, rgba(140, 170, 255, 0.12), transparent 60%),
+    radial-gradient(900px 600px at 85% 25%, rgba(160, 120, 255, 0.10), transparent 55%),
+    radial-gradient(1100px 800px at 40% 85%, rgba(90, 220, 255, 0.06), transparent 60%),
+    linear-gradient(180deg, #0f1013 0%, var(--bg-dark-gray) 40%, #0f1013 100%);
+  height: calc(100vh - 70px);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  color: var(--text-secondary);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* subtle star field */
+.example-page-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image:
+    radial-gradient(1px 1px at 12% 22%, rgba(255, 255, 255, 0.75) 50%, transparent 55%),
+    radial-gradient(1px 1px at 28% 68%, rgba(255, 255, 255, 0.55) 50%, transparent 55%),
+    radial-gradient(1px 1px at 46% 18%, rgba(255, 255, 255, 0.60) 50%, transparent 55%),
+    radial-gradient(1px 1px at 64% 54%, rgba(255, 255, 255, 0.45) 50%, transparent 55%),
+    radial-gradient(1px 1px at 78% 32%, rgba(255, 255, 255, 0.55) 50%, transparent 55%),
+    radial-gradient(1px 1px at 86% 76%, rgba(255, 255, 255, 0.40) 50%, transparent 55%),
+    radial-gradient(2px 2px at 20% 40%, rgba(255, 255, 255, 0.22) 50%, transparent 55%),
+    radial-gradient(2px 2px at 55% 75%, rgba(255, 255, 255, 0.18) 50%, transparent 55%),
+    radial-gradient(2px 2px at 72% 12%, rgba(255, 255, 255, 0.16) 50%, transparent 55%);
+  filter: blur(0.2px);
+}
+
+.example-main-content {
+  flex-grow: 1;
+  padding: 52px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.example-container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.example-container .page-title {
+  text-align: center;
+  margin-bottom: 42px;
+  color: var(--text-primary);
+  font-size: 2.55em;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 20px rgba(140, 170, 255, 0.12);
+}
+
+/* 2. Card styles */
+.section-card {
+  background-color: var(--container-dark);
+  border-radius: 16px;
+  padding: 30px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border-gray);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+/* subtle accent edge */
+.section-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 16px;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(140, 170, 255, 0.22),
+    rgba(255, 255, 255, 0.06),
+    rgba(160, 120, 255, 0.18)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+.section-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-strong);
+  border-color: rgba(140, 170, 255, 0.22);
+}
+
+.section-card h2 {
+  color: var(--text-primary);
+  font-size: 1.65em;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  letter-spacing: -0.01em;
+}
+
+.section-card h2::after {
+  content: "";
+  display: block;
+  width: 70px;
+  height: 2px;
+  margin-top: 10px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  border-radius: 999px;
+  opacity: 0.9;
+}
+
+/* 3. Description */
+.example-desc {
+  font-size: 1.03em;
+  line-height: 1.85;
+  color: var(--text-secondary);
+}
+
+.example-desc strong {
+  color: var(--text-primary);
+  font-weight: 800;
+  text-shadow: 0 0 14px rgba(140, 170, 255, 0.10);
+}
+
+/* 4. Callout section */
+.callout-section {
+  text-align: left;
+}
+
+.callout-section p {
+  font-size: 1.06em;
+  line-height: 1.75;
+  color: var(--text-secondary);
+}
+
+/* 5. Responsive */
+@media (max-width: 768px) {
+  .example-main-content {
+    padding: 28px 0;
+  }
+
+  .example-container .page-title {
+    font-size: 2.05em;
+    margin-bottom: 28px;
+  }
+
+  .section-card {
+    padding: 20px;
+    border-radius: 14px;
+  }
+
+  .section-card::before {
+    border-radius: 14px;
+  }
+
+  .section-card h2 {
+    font-size: 1.4em;
+  }
+}

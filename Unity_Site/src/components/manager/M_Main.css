@@ -1,0 +1,156 @@
+/* manager/M_Main.css - 푸른빛 다크 톤 (통일) */
+
+/* 전역 설정 통일 */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  /* 전체 페이지 배경: #1A222A */
+  background-color: #1A222A; 
+  color: #ffffff;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden; /* body 스크롤 방지 */
+}
+
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #1A222A;
+  overflow: hidden; /* root 스크롤 방지 */
+}
+
+/* 전역 박스 사이징 */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.m-container {
+  /* 컨테이너 배경: #1A222A */
+  background-color: #1A222A;
+  height: 100vh; /* 전체 화면 높이 */
+  display: flex;
+  flex-direction: column;
+  color: white;
+  overflow: hidden; /* 컨테이너 자체 스크롤 방지 */
+}
+
+/* 헤더를 제외한 컨텐츠 영역 */
+.m-content-wrapper {
+  flex: 1;
+  overflow-y: auto; /* 이 영역만 스크롤 */
+  overflow-x: hidden;
+  min-height: 0;
+}
+
+/* 컨텐츠 래퍼 스크롤바 커스터마이징 */
+.m-content-wrapper::-webkit-scrollbar {
+  width: 10px;
+}
+
+.m-content-wrapper::-webkit-scrollbar-track {
+  background: #1A222A;
+}
+
+.m-content-wrapper::-webkit-scrollbar-thumb {
+  background: #546A83;
+  border-radius: 5px;
+}
+
+.m-content-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #6A8199;
+}
+
+.m-dashboard {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap;
+  min-height: min-content; /* 내용에 맞게 높이 조정 */
+}
+
+.m-box {
+  /* 대시보드 박스 배경: #212B36 */
+  background-color: #212B36; 
+  padding: 20px;
+  border-radius: 10px;
+  flex: 1;
+  min-width: 280px;
+  color: white;
+  max-height: 500px; /* 박스 최대 높이 */
+  overflow-y: auto; /* 박스 내 스크롤 */
+  display: flex;
+  flex-direction: column;
+}
+
+/* 박스 스크롤바 커스터마이징 */
+.m-box::-webkit-scrollbar {
+  width: 8px;
+}
+
+.m-box::-webkit-scrollbar-track {
+  background: #1A222A;
+  border-radius: 10px;
+}
+
+.m-box::-webkit-scrollbar-thumb {
+  background: #546A83;
+  border-radius: 10px;
+}
+
+.m-box::-webkit-scrollbar-thumb:hover {
+  background: #6A8199;
+}
+
+.m-box h2 {
+  margin: 0 0 15px 0;
+  color: white;
+  position: sticky;
+  top: 0;
+  background-color: #212B36;
+  padding-bottom: 10px;
+  z-index: 1;
+  flex-shrink: 0; /* 제목 크기 고정 */
+}
+
+.m-box-content {
+  flex: 1;
+  overflow-y: auto; /* 박스 내용 스크롤 */
+}
+
+/* 반응형: 작은 화면 */
+@media (max-width: 1024px) {
+  .m-dashboard {
+    flex-direction: column;
+  }
+  
+  .m-box {
+    min-width: 100%;
+    max-height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .m-dashboard {
+    padding: 15px;
+    gap: 15px;
+  }
+  
+  .m-box {
+    padding: 15px;
+    max-height: 350px;
+  }
+}
+
+@media (max-width: 480px) {
+  .m-dashboard {
+    padding: 10px;
+  }
+  
+  .m-box {
+    padding: 12px;
+    max-height: 300px;
+  }
+}

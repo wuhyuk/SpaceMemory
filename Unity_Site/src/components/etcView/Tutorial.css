@@ -1,0 +1,107 @@
+/* src/components/etcView/Tutorial.css */
+/* Tutorial 페이지 - 무채색 톤 */
+
+/* 색상 변수 (Introduction.css와 동일하게 맞춤) */
+:root {
+  --bg-dark-gray: #202020;
+  --text-primary: #FFFFFF;
+  --text-secondary: #CCCCCC;
+  --container-dark: #2C2C2C;
+  --border-gray: #444444;
+}
+
+/* 1. 전체 레이아웃 */
+.tutorial-page-wrapper {
+  background-color: var(--bg-dark-gray);
+  height: calc(100vh - 70px);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  color: var(--text-secondary);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-y: auto;   /* ✅ 튜토리얼 전용 스크롤 컨테이너 */
+  overflow-x: hidden;
+}
+
+
+.tutorial-main-content {
+  flex-grow: 1;
+  padding: 40px 0;
+}
+
+.tutorial-container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.tutorial-container .page-title {
+  text-align: center;
+  margin-bottom: 40px;
+  color: var(--text-primary);
+  font-size: 2.4em;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* 2. 공통 카드 스타일 */
+.section-card {
+  background-color: var(--container-dark);
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-gray);
+}
+
+.section-card h2 {
+  color: var(--text-primary);
+  font-size: 1.6em;
+  margin-bottom: 18px;
+  border-bottom: 2px solid var(--border-gray);
+  padding-bottom: 8px;
+}
+
+/* 3. 튜토리얼 리스트 */
+.tutorial-list {
+  margin: 0;
+  padding-left: 18px;
+  list-style-type: disc;
+}
+
+.tutorial-list li {
+  margin-bottom: 10px;
+  font-size: 1em;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* 4. 콜아웃 영역 */
+.callout-section {
+  text-align: left;
+}
+
+.callout-section p {
+  font-size: 1.05em;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+/* 5. 반응형 */
+@media (max-width: 768px) {
+  .tutorial-main-content {
+    padding: 24px 0;
+  }
+
+  .tutorial-container .page-title {
+    font-size: 2em;
+  }
+
+  .section-card {
+    padding: 20px;
+  }
+
+  .section-card h2 {
+    font-size: 1.4em;
+  }
+}

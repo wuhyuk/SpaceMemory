@@ -1,0 +1,384 @@
+/* manager/M_User.css - 푸른빛 다크 톤 (통일) */
+
+.m-user-container {
+  background-color: #2C3742;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 컨테이너 스크롤바 커스터마이징 */
+.m-user-container::-webkit-scrollbar {
+  width: 10px;
+}
+.m-user-container::-webkit-scrollbar-track {
+  background: #1A222A;
+  border-radius: 10px;
+}
+.m-user-container::-webkit-scrollbar-thumb {
+  background: #546A83;
+  border-radius: 10px;
+}
+.m-user-container::-webkit-scrollbar-thumb:hover {
+  background: #6A8199;
+}
+
+/* 컨테이너 제목 */
+.m-user-container h2 {
+  margin: 0 0 15px 0;
+  color: white;
+  position: sticky;
+  top: 0;
+  background-color: #2C3742;
+  padding-bottom: 10px;
+  z-index: 10;
+}
+
+/* 테이블 스타일 */
+.m-user-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* 열 정렬 정확히 유지 */
+  color: white;
+  background-color: #2C3742;
+  border-radius: 10px;
+  min-width: 600px;
+}
+
+/* ========== 스크롤을 tbody에 적용 ========== */
+
+/* 헤더 고정 */
+.m-user-table thead {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #212B36;
+}
+
+/* tbody가 스크롤되는 영역 */
+.m-user-table tbody {
+  display: block;
+  max-height: calc(100vh - 260px); /* 필요하면 조절 가능 */
+  overflow-y: auto;
+  width: 100%;
+}
+
+/* tbody 내부 rows도 table 형태를 유지해야 열 정렬이 맞는다 */
+.m-user-table tbody tr {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+
+/* 스크롤바 스타일 */
+.m-user-table tbody::-webkit-scrollbar {
+  width: 10px;
+}
+.m-user-table tbody::-webkit-scrollbar-track {
+  background: #1A222A;
+  border-radius: 10px;
+}
+.m-user-table tbody::-webkit-scrollbar-thumb {
+  background: #546A83;
+  border-radius: 10px;
+}
+.m-user-table tbody::-webkit-scrollbar-thumb:hover {
+  background: #6A8199;
+}
+
+/* 셀 스타일 */
+.m-user-table th,
+.m-user-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #3A4552;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+/* 헤더 스타일 */
+.m-user-table th {
+  background-color: #212B36;
+  color: white;
+}
+
+/* 헤더 둥근 모서리 */
+.m-user-table th:first-child {
+  border-top-left-radius: 10px;
+}
+.m-user-table th:last-child {
+  border-top-right-radius: 10px;
+}
+
+/* 마지막 행 둥근 모서리 */
+.m-user-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.m-user-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 10px;
+}
+.m-user-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}
+
+/* 행 hover 효과 */
+.m-user-table tbody tr {
+  transition: background-color 0.2s;
+}
+.m-user-table tbody tr:hover {
+  background-color: #3A4552;
+}
+
+/* 반응형: 태블릿 */
+@media (max-width: 1024px) {
+  .m-user-container {
+    margin: 15px;
+    padding: 18px;
+    max-height: calc(100vh - 90px);
+  }
+}
+
+/* 반응형: 모바일 */
+@media (max-width: 768px) {
+  .m-user-container {
+    margin: 10px;
+    padding: 15px;
+    max-height: calc(100vh - 80px);
+  }
+
+  .m-user-table th,
+  .m-user-table td {
+    padding: 10px 8px;
+    font-size: 0.9rem;
+  }
+
+  .m-user-table {
+    min-width: 500px;
+  }
+}
+
+/* 반응형: 작은 모바일 */
+@media (max-width: 480px) {
+  .m-user-container {
+    margin: 5px;
+    padding: 10px;
+    max-height: calc(100vh - 70px);
+  }
+
+  .m-user-table th,
+  .m-user-table td {
+    padding: 8px 6px;
+    font-size: 0.85rem;
+  }
+
+  .m-user-table {
+    min-width: 450px;
+  }
+}
+
+/* 컨트롤 영역 */
+.m-user-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.m-user-search-input {
+  flex: 1;
+  min-width: 180px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #3a4552;
+  background-color: #1a222a;
+  color: #fff;
+}
+
+.m-user-select {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #3a4552;
+  background-color: #1a222a;
+  color: #fff;
+}
+
+/* 메시지 */
+.m-user-message {
+  margin-bottom: 10px;
+}
+
+.m-user-error {
+  color: #ff7b7b;
+}
+
+/* 상세 버튼 */
+.m-user-detail-btn {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  background-color: #546a83;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.m-user-detail-btn:hover {
+  background-color: #6a8199;
+}
+
+/* 모달 */
+.m-user-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.m-user-modal {
+  background: #0f1724;
+  border-radius: 16px;
+  padding: 24px 28px;
+  width: 480px;        /* 상세 / 상태변경 모달 공통 폭 */
+  max-width: 90%;
+  box-shadow:
+    0 0 18px rgba(84, 130, 255, 0.35),
+    0 0 36px rgba(84, 130, 255, 0.18);
+}
+
+.m-user-modal h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 20px;
+}
+
+.m-user-modal-content p {
+  margin: 4px 0;
+}
+
+.m-user-modal-actions {
+  margin-top: 18px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* 페이지네이션 */
+.m-user-pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.m-user-page-btn {
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: none;
+  background-color: #3a4552;
+  color: #fff;
+  cursor: pointer;
+}
+
+.m-user-page-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.m-user-page-info {
+  font-size: 0.9rem;
+  color: #ddd;
+}
+/* 상태 색상 표시 */
+.m-user-status-active {
+  color: #9effa3;
+  font-weight: 600;
+}
+
+.m-user-status-suspended {
+  color: #ffcf7b;
+  font-weight: 600;
+}
+
+.m-user-status-banned {
+  color: #ff7b7b;
+  font-weight: 700;
+}
+
+/* 정지 / 해제 버튼 */
+.m-user-punish-btn,
+.m-user-release-btn {
+  margin-left: 6px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.m-user-punish-btn {
+  background-color: #d98324;
+  color: #fff;
+}
+
+.m-user-punish-btn:hover {
+  background-color: #f29b3d;
+}
+
+.m-user-release-btn {
+  background-color: #3a855e;
+  color: #fff;
+}
+
+.m-user-release-btn:hover {
+  background-color: #46a06f;
+}
+
+/* 수동 새로고침 버튼 */
+.m-user-refresh-btn {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: none;
+  background-color: #3a4552;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.m-user-refresh-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* 상태 변경 버튼 공통 스타일 */
+.m-user-status-btn {
+  margin-left: 6px;
+  padding: 4px 10px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background: #8b5cf6;  /* 보라색 계열 */
+  color: #ffffff;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.m-user-status-btn:hover {
+  background: #a855f7;
+  transform: translateY(-1px);
+}
+
+.m-user-status-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+  transform: none;
+}

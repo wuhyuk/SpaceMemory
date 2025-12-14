@@ -1,0 +1,367 @@
+/* manager/M_Decl.css - 푸른빛 다크 톤 (통일) */
+
+.m-decl-container {
+    /* 메인 컨테이너 배경: #2C3742 */
+    background-color: #2C3742; 
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    overflow-x: hidden; 
+    position: relative; 
+    display: flex;
+    flex-direction: column;
+}
+
+/* 🚨 신고 리스트 스크롤 영역 */
+.m-decl-scroll {
+    /* 전체 높이에서 제목/컨트롤 영역을 뺀 만큼만 스크롤 */
+    max-height: calc(100vh - 180px);
+    overflow-y: auto;
+    position: relative;
+}
+
+/* 🚨 Webkit 기반 스크롤바 스타일 (M_User와 동일 계열) */
+.m-decl-scroll::-webkit-scrollbar {
+    width: 10px;
+}
+
+.m-decl-scroll::-webkit-scrollbar-track {
+    background: #1A222A;
+    border-radius: 10px;
+}
+
+.m-decl-scroll::-webkit-scrollbar-thumb {
+    background: #546A83;
+    border-radius: 10px;
+}
+
+.m-decl-scroll::-webkit-scrollbar-thumb:hover {
+    background: #6A8199;
+}
+
+/* 컨트롤 영역 (검색/필터/정렬) - M_User와 일관성 */
+.m-decl-controls {
+    margin-bottom: 10px;
+}
+
+/* 컨테이너 제목 */
+.m-decl-container h2 {
+    position: sticky;
+    top: 0;
+    background-color: #2C3742;
+    padding: 15px 0;
+    margin: 0 0 15px 0;
+    z-index: 999;
+}
+
+.m-decl-container h2::before {
+    content: "";
+    position: absolute;
+    top: -35px;
+    left: 0;
+    width: 100%;
+    height: 35px;
+    background-color: #2C3742;
+    z-index: 10;
+}
+
+/* 개별 신고 카드 */
+.m-decl-box {
+    /* 내부 박스 배경: #212B36 */
+    background-color: #212B36; 
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    z-index: 1;
+}
+
+.m-decl-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.m-decl-box h3 {
+    margin: 0 0 10px 0;
+    color: white;
+    font-size: 1.1rem;
+}
+
+.m-decl-box p {
+    margin: 5px 0;
+    color: #e0e0e0;
+    line-height: 1.5;
+}
+
+/* 기존 버튼 기본 스타일 (fallback) */
+.m-decl-box button {
+    margin-top: 10px;
+    margin-right: 8px;
+    padding: 6px 12px;
+    /* 버튼 기본 색상: #3E4C5F */
+    background-color: #3E4C5F; 
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    font-size: 0.9rem;
+}
+
+.m-decl-box button:hover {
+    /* 버튼 호버 색상: #546A83 */
+    background-color: #546A83;
+    transform: translateY(-1px);
+}
+
+.m-decl-box button:active {
+    transform: translateY(0);
+}
+
+/* 신고 없음 메시지 */
+.m-decl-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: #999;
+    font-size: 1.1rem;
+}
+
+/* 🔹 헤더 줄 (제목 + 태그) */
+.m-decl-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 🔹 카테고리 태그 */
+.m-decl-tag {
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+
+.m-decl-tag-abuse {
+    background: rgba(255, 99, 132, 0.2);
+    border: 1px solid rgba(255, 99, 132, 0.7);
+}
+
+.m-decl-tag-image {
+    background: rgba(54, 162, 235, 0.2);
+    border: 1px solid rgba(54, 162, 235, 0.7);
+}
+
+.m-decl-tag-spam {
+    background: rgba(255, 206, 86, 0.2);
+    border: 1px solid rgba(255, 206, 86, 0.7);
+}
+
+.m-decl-tag-etc {
+    background: rgba(153, 102, 255, 0.2);
+    border: 1px solid rgba(153, 102, 255, 0.7);
+}
+
+/* 🔹 카드 하단 버튼 영역 */
+.m-decl-actions {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* 공통 버튼 스타일 (모달/카드 둘 다 사용) */
+.m-decl-btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+/* 행성 보기 */
+.m-decl-btn-view {
+    background-color: #3A4552;
+    color: #fff;
+}
+.m-decl-btn-view:hover {
+    background-color: #4a5666;
+}
+
+/* 신고 처리 */
+.m-decl-btn-resolve {
+    background-color: #546A83;
+    color: #fff;
+}
+.m-decl-btn-resolve:hover {
+    background-color: #6A8199;
+}
+
+/* 삭제 + 처리 */
+.m-decl-btn-delete {
+    background-color: #B34747;
+    color: #fff;
+}
+.m-decl-btn-delete:hover {
+    background-color: #c45b5b;
+}
+
+.m-decl-btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+    transform: none;
+}
+
+/* 로딩/에러 메시지 */
+.m-decl-message {
+    margin-top: 8px;
+    font-size: 0.9rem;
+}
+
+.m-decl-error {
+    color: #ff7b7b;
+}
+
+/* 🔹 페이지네이션 (M_User와 동일 계열) */
+.m-decl-pagination {
+    margin-top: 10px;
+}
+
+/* 🔹 모달 오버레이: 화면 전체 중앙 */
+.m-decl-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 4000;
+}
+
+/* 모달 박스 */
+.m-decl-modal {
+    background: #212B36;
+    padding: 18px 20px;
+    border-radius: 10px;
+    min-width: 320px;
+    max-width: 480px;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+}
+
+.m-decl-modal h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.m-decl-modal p {
+    margin: 4px 0;
+}
+
+/* 모달 버튼 영역 */
+.m-decl-modal-buttons {
+    margin-top: 14px;
+    display: flex;
+    gap: 8px;
+}
+
+.m-decl-modal-footer {
+    margin-top: 12px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.m-decl-modal-footer button {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: none;
+    background-color: #3A4552;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+/* 반응형: 태블릿 */
+@media (max-width: 1024px) {
+    .m-decl-container {
+      margin: 15px;
+      padding: 18px;
+      max-height: calc(100vh - 90px);
+    }
+}
+
+/* 반응형: 모바일 */
+@media (max-width: 768px) {
+    .m-decl-container {
+      margin: 10px;
+      padding: 15px;
+      max-height: calc(100vh - 80px);
+    }
+
+    .m-decl-box {
+      padding: 12px;
+    }
+
+    .m-decl-box h3 {
+      font-size: 1rem;
+    }
+
+    .m-decl-box p {
+      font-size: 0.9rem;
+    }
+
+    .m-decl-box button {
+      padding: 5px 10px;
+      font-size: 0.85rem;
+    }
+
+    .m-decl-modal {
+      width: 90%;
+      max-width: 420px;
+    }
+}
+
+/* 반응형: 작은 모바일 */
+@media (max-width: 480px) {
+    .m-decl-container {
+      margin: 5px;
+      padding: 10px;
+      max-height: calc(100vh - 70px);
+    }
+
+    .m-decl-box {
+      padding: 10px;
+      margin-top: 10px;
+    }
+
+    .m-decl-box button {
+      width: 100%; 
+      margin-right: 0;
+      margin-bottom: 8px;
+    }
+
+    .m-decl-box button:last-child {
+      margin-bottom: 0;
+    }
+
+    .m-decl-modal {
+      min-width: 0;
+      width: 92%;
+    }
+
+    .m-decl-modal-buttons {
+      flex-direction: column;
+    }
+
+    .m-decl-modal-buttons .m-decl-btn {
+      width: 100%;
+      text-align: center;
+    }
+}
+.m-decl-deleted-label {
+  margin-left: 4px;
+  font-size: 12px;
+  color: #f97373;
+}

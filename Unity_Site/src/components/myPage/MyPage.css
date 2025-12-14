@@ -1,0 +1,319 @@
+/* MyPage.css */
+
+/* 🔹 전체 컨테이너 - 바디 전체로 확장 */
+.mypage-container {
+  width: 100%;
+  min-height: 100vh;
+  background: #0a0a14; /* 어두운 배경 */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 100px 20px 60px;
+}
+
+/* 🔹 비밀번호 확인 박스 - 창 형식 유지 */
+.mypage-verify-box {
+  background: rgba(20, 20, 35, 0.9);
+  border: 1px solid rgba(120, 130, 255, 0.3);
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+/* 🔹 회원정보 수정 박스 - 바디 전체로 확장 */
+.mypage-content-box {
+  background: rgba(20, 20, 35, 0.9);
+  border: 1px solid rgba(120, 130, 255, 0.3);
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 1200px; /* 더 넓게 */
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+/* 🔹 헤더 영역 (타이틀 + 비밀번호 변경 버튼) */
+.mypage-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+/* 🔹 타이틀 */
+.mypage-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #e6ebff;
+  text-shadow: 0 0 8px rgba(180, 190, 255, 0.8);
+  margin: 0;
+}
+
+/* 🔹 비밀번호 변경 버튼 (작은 버튼) */
+.mypage-change-password-btn {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(120, 130, 255, 0.2);
+  border: 1px solid rgba(120, 130, 255, 0.5);
+  color: #b8bcc5;
+}
+
+.mypage-change-password-btn:hover {
+  background: rgba(120, 130, 255, 0.3);
+  border-color: rgba(120, 130, 255, 0.7);
+  color: #e6ebff;
+  transform: translateY(-1px);
+}
+
+/* 🔹 서브타이틀 */
+.mypage-subtitle {
+  font-size: 0.95rem;
+  color: #b8bcc5;
+  text-align: center;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+/* 🔹 폼 스타일 */
+.mypage-verify-form,
+.mypage-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 🔹 입력 그룹 */
+.mypage-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mypage-input-group label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #dcdcdc;
+}
+
+.mypage-required {
+  color: #ff6b6b;
+  margin-left: 4px;
+}
+
+.mypage-input-group input {
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 1px solid rgba(120, 130, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(30, 30, 50, 0.7);
+  color: #e6ebff;
+  transition: all 0.3s ease;
+}
+
+.mypage-input-group input:focus {
+  outline: none;
+  border-color: rgba(120, 130, 255, 0.6);
+  box-shadow: 0 0 8px rgba(120, 130, 255, 0.4);
+}
+
+.mypage-input-group input::placeholder {
+  color: #6b6f7a;
+}
+
+/* 🔹 비활성화된 입력 필드 */
+.mypage-input-disabled {
+  background: rgba(50, 50, 70, 0.5) !important;
+  color: #8b8f9a !important;
+  cursor: not-allowed;
+}
+
+/* 🔹 에러 텍스트 */
+.mypage-error-text {
+  font-size: 0.85rem;
+  color: #ff6b6b;
+  margin-top: 4px;
+}
+
+/* 🔹 메시지 */
+.mypage-message {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.mypage-message-success {
+  background: rgba(72, 187, 120, 0.2);
+  border: 1px solid rgba(72, 187, 120, 0.5);
+  color: #68d391;
+}
+
+.mypage-message-error {
+  background: rgba(255, 107, 107, 0.2);
+  border: 1px solid rgba(255, 107, 107, 0.5);
+  color: #ff6b6b;
+}
+
+/* 🔹 버튼 공통 스타일 */
+.mypage-btn {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+.mypage-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 🔹 Primary 버튼 */
+.mypage-btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+}
+
+.mypage-btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #5568d3 0%, #6a4293 100%);
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+  transform: translateY(-2px);
+}
+
+/* 🔹 Secondary 버튼 */
+.mypage-btn-secondary {
+  background: rgba(120, 130, 255, 0.2);
+  border: 1px solid rgba(120, 130, 255, 0.5);
+  color: #b8bcc5;
+}
+
+.mypage-btn-secondary:hover:not(:disabled) {
+  background: rgba(120, 130, 255, 0.3);
+  border-color: rgba(120, 130, 255, 0.7);
+  color: #e6ebff;
+}
+
+/* 🔹 Danger 버튼 */
+.mypage-btn-danger {
+  background: rgba(255, 107, 107, 0.2);
+  border: 1px solid rgba(255, 107, 107, 0.5);
+  color: #ff6b6b;
+}
+
+.mypage-btn-danger:hover:not(:disabled) {
+  background: rgba(255, 107, 107, 0.3);
+  border-color: rgba(255, 107, 107, 0.7);
+  color: #ff8787;
+  box-shadow: 0 4px 16px rgba(255, 107, 107, 0.3);
+}
+
+/* 🔹 버튼 그룹 - 간격 넓히기 */
+.mypage-button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* 12px에서 30px로 증가 */
+  margin-top: 20px; /* 상단 여백도 추가 */
+}
+
+/* 🔹 모달 오버레이 */
+.mypage-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+/* 🔹 모달 박스 */
+.mypage-modal-box {
+  background: rgba(20, 20, 35, 0.95);
+  border: 1px solid rgba(120, 130, 255, 0.3);
+  border-radius: 16px;
+  padding: 30px;
+  max-width: 450px;
+  width: 90%;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.7);
+}
+
+/* 🔹 모달 타이틀 */
+.mypage-modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ff6b6b;
+  text-align: center;
+  margin-bottom: 15px;
+  text-shadow: 0 0 8px rgba(255, 107, 107, 0.6);
+}
+
+/* 🔹 모달 텍스트 */
+.mypage-modal-text {
+  font-size: 1rem;
+  color: #dcdcdc;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+/* 🔹 모달 버튼 그룹 */
+.mypage-modal-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.mypage-modal-buttons .mypage-btn {
+  flex: 1;
+  max-width: 150px;
+}
+
+/* 🔹 반응형 디자인 */
+@media (max-width: 600px) {
+  .mypage-verify-box,
+  .mypage-content-box {
+    padding: 30px 20px;
+  }
+
+  .mypage-title {
+    font-size: 1.5rem;
+  }
+
+  .mypage-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+
+  .mypage-change-password-btn {
+    width: 100%;
+  }
+
+  .mypage-button-group {
+    flex-direction: column;
+  }
+
+  .mypage-modal-buttons {
+    flex-direction: column;
+  }
+
+  .mypage-modal-buttons .mypage-btn {
+    max-width: 100%;
+  }
+}

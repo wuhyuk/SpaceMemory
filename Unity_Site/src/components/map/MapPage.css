@@ -1,0 +1,116 @@
+/* 지도 페이지 전체 컨테이너 */
+.map-page-container {
+  width: 100%;
+  height: calc(100vh - 80px);
+  position: relative;
+  
+  /* CartoDB Light 지도의 바다/배경색과 자연스럽게 이어지도록 밝은 회색조 설정 */
+  background-color: #d4dadc;
+  
+  overflow: hidden;
+}
+
+/* 실제 지도가 그려지는 영역 */
+#map {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  /* 지도 로딩 전 배경색도 동일하게 맞춤 */
+  background: #d4dadc;
+}
+
+/* ⭐️ DivIcon (숫자) 스타일링 */
+.number-icon {
+  /* Leaflet 기본 마커 스타일 상속 방지 */
+  border: none !important;
+  background: transparent !important;
+  
+  /* 아이콘 영역을 중앙 정렬 */
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  
+  /* CircleMarker의 중심과 정확히 겹치도록 z-index를 높입니다. */
+  z-index: 700 !important;
+  
+  /* 포인터 이벤트 무시 (클릭 시 원만 반응하도록) */
+  pointer-events: none;
+}
+
+/* 숫자 텍스트를 감싸는 내부 div 스타일링 */
+.number-icon div {
+  font-size: 14px !important;
+  font-weight: bold !important;
+  color: white !important;
+  text-align: center !important;
+  line-height: 20px !important;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5) !important;
+  user-select: none; /* 텍스트 선택 방지 */
+}
+
+/* ✅ 지도 로딩 오버레이 */
+.map-loading-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 9999; /* 지도 위로 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(212, 218, 220, 0.75);
+  backdrop-filter: blur(2px);
+}
+
+/* 로딩 박스 */
+.map-loading-box {
+  min-width: 280px;
+  max-width: 420px;
+  padding: 18px 20px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.12);
+  text-align: center;
+}
+
+/* 스피너 */
+.map-loading-spinner {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 4px solid rgba(0,0,0,0.12);
+  border-top-color: rgba(0,0,0,0.45);
+  margin: 0 auto 10px auto;
+  animation: mapSpin 0.9s linear infinite;
+}
+
+@keyframes mapSpin {
+  to { transform: rotate(360deg); }
+}
+
+.map-loading-text {
+  font-size: 15px;
+  font-weight: 700;
+  color: rgba(0,0,0,0.78);
+  margin-bottom: 6px;
+}
+
+.map-loading-subtext {
+  font-size: 13px;
+  color: rgba(0,0,0,0.55);
+  line-height: 1.35;
+}
+
+/* 재시도 버튼 */
+.map-loading-retry {
+  margin-top: 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.12);
+  background: rgba(255,255,255,0.95);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.map-loading-retry:hover {
+  background: rgba(255,255,255,1);
+}

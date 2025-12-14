@@ -1,0 +1,277 @@
+/* src/planet/modals/PlanetModal.css */
+
+/* === from AddPlanetPopup.css === */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6000;
+}
+
+.popup-panel {
+  background: #0b0f1a;
+  border: 2px solid rgba(100, 200, 255, 0.6);
+  border-radius: 18px;
+  padding: 28px;
+  width: 520px;
+  max-width: 90vw;
+  box-shadow: 0 0 20px rgba(100, 200, 255, 0.35);
+  color: #fff;
+  position: relative;
+}
+
+.input-text {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  margin-bottom: 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(130, 170, 255, 0.35);
+  background: rgba(10, 15, 30, 0.8);
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+}
+
+.input-text::placeholder {
+  color: rgba(200, 220, 255, 0.6);
+}
+
+.file-select-area {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.file-select-button {
+  padding: 10px 14px;
+  background: rgba(60, 120, 255, 0.25);
+  border: 1px solid rgba(60, 120, 255, 0.55);
+  color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.file-select-button:hover {
+  background: rgba(60, 120, 255, 0.4);
+}
+
+.preview-strip {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  margin-bottom: 14px;
+}
+
+.preview-item {
+  width: 92px;
+  height: 92px;
+  border-radius: 12px;
+  border: 1px solid rgba(120, 180, 255, 0.35);
+  overflow: hidden;
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.preview-item img,
+.preview-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.preview-delete-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255, 70, 70, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.warning-box {
+  background: rgba(255, 200, 0, 0.2);
+  border: 1px solid rgba(255, 200, 0, 0.55);
+  border-radius: 10px;
+  padding: 10px;
+  color: rgba(255, 230, 170, 1);
+  font-size: 13px;
+}
+
+.error-message-box {
+  background: rgba(255, 0, 0, 0.2);
+  border: 1px solid rgba(255, 70, 70, 0.6);
+  border-radius: 10px;
+  padding: 10px;
+  color: rgba(255, 200, 200, 1);
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.popup-add {
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(120, 220, 255, 0.55);
+  background: rgba(0, 180, 255, 0.25);
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.popup-add:hover {
+  background: rgba(0, 180, 255, 0.4);
+}
+
+.popup-close,
+.popup-cancel {
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.popup-close:hover,
+.popup-cancel:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+/* === from PlanetEditPopup.css === */
+.planet-edit-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 8000; /* PATCH: above other overlays */
+}
+
+.planet-edit-panel {
+  background: #0b0f1a;
+  border: 2px solid rgba(120, 180, 255, 0.55);
+  box-shadow: 0 0 24px rgba(120, 180, 255, 0.28);
+  border-radius: 18px;
+  width: 480px;
+  max-width: 92vw;
+  padding: 26px;
+  color: #fff;
+}
+
+.planet-edit-panel h3 {
+  margin: 0 0 18px 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.edit-input-group {
+  margin-bottom: 16px;
+}
+
+.edit-label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 8px;
+  color: rgba(200, 220, 255, 0.8);
+}
+
+.edit-input-text {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(130, 170, 255, 0.35);
+  background: rgba(10, 15, 30, 0.8);
+  color: #fff;
+  outline: none;
+}
+
+.edit-thumbnail-preview {
+  width: 100%;
+  height: 180px;
+  border-radius: 14px;
+  border: 1px solid rgba(130, 170, 255, 0.35);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-thumbnail-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.no-preview-text {
+  color: rgba(200, 220, 255, 0.55);
+  font-size: 13px;
+}
+
+.edit-file-btn {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: rgba(60, 120, 255, 0.25);
+  border: 1px solid rgba(60, 120, 255, 0.55);
+  color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.edit-file-btn:hover {
+  background: rgba(60, 120, 255, 0.4);
+}
+
+.edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.edit-cancel-btn {
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  cursor: pointer;
+}
+
+.edit-save-btn {
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(120, 220, 255, 0.55);
+  background: rgba(0, 180, 255, 0.25);
+  color: #fff;
+  cursor: pointer;
+}

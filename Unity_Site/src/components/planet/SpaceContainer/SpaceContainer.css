@@ -1,0 +1,41 @@
+/* src/planet/SpaceContainer/SpaceContainer.css */
+
+.planet-page-root {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* ✅ 실제 UI는 배경보다 위로 */
+.planet-ui-layer {
+  position: relative;
+  z-index: 20; /* SpaceBackground tooltip 등이 10대일 수 있으므로 충분히 크게 */
+}
+
+.space-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+  /* ✅ 기존엔 background: #000; 이었는데,
+     이제 배경은 SpaceBackground가 담당하므로 투명 처리 권장 */
+  background: transparent;
+}
+
+/* 캔버스 공통 스타일 */
+.stars-canvas,
+.planet-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.stars-canvas {
+  z-index: 1;
+}
+
+.planet-canvas {
+  z-index: 2;
+}

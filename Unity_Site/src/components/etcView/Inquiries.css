@@ -1,0 +1,252 @@
+/* Inquiries.css - 다크 그레이 톤 최종 버전 */
+
+/* 기본 스타일 및 색상 변수 정의 */
+:root {
+    --bg-dark-gray: #202020;         /* 페이지 배경 (다크 그레이) */
+    --text-light: #F0F0F0;           /* 기본 텍스트 색상 */
+    --container-dark: #2C2C2C;       /* 컨테이너 및 테이블 배경 */
+    --modal-dark: #383838;           /* 모달 배경 */
+    --border-gray: #444444;          /* 구분선 및 테두리 */
+    --primary-blue: #4A90E2;         /* 주요 버튼/링크 색상 */
+    --success-green: #4A90E2;        /* 제출 버튼 색상 */
+    --secondary-gray: #777777;       /* 취소 버튼 색상 */
+    --header-text-color: #FFFFFF;    /* 게시판 제목 및 테이블 헤더 텍스트 색상 */
+}
+
+/* 1. 전체 페이지 레이아웃 */
+.inquiries-page-wrapper {
+    background-color: var(--bg-dark-gray); 
+    height: calc(100vh - 70px);
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    color: var(--text-light); 
+    overflow-y: auto;   /* ✅ 문의 게시판 스크롤 담당 */
+    overflow-x: hidden;
+}
+
+
+.inquiries-main-content {
+    flex-grow: 1;
+    padding: 20px 0;
+}
+
+.inquiries-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.page-title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--header-text-color); /* 게시판 상단 제목 */
+    font-size: 2em;
+    font-weight: 600;
+}
+
+/* 2. 검색 및 컨트롤 영역 */
+.controls-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.search-input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 1px solid var(--border-gray);
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: var(--container-dark);
+    color: var(--text-light);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.4); 
+    outline: none;
+}
+
+/* 3. 버튼 공통 스타일 및 색상 */
+.primary-btn {
+    background-color: var(--primary-blue); /* 문의 작성 버튼 (기본색) */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.primary-btn:hover {
+    background-color: #3872b7;
+}
+
+/* 4. 게시판 테이블 */
+.table-wrapper {
+    overflow-x: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    background-color: var(--container-dark);
+}
+
+.posts-table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+}
+
+.posts-table th, .posts-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-gray); 
+}
+
+.posts-table th {
+    background-color: #333333;
+    color: var(--header-text-color); 
+    font-weight: 600;
+    font-size: 1em;
+}
+
+.posts-table tbody tr:hover {
+    background-color: #3A3A3A; 
+    cursor: pointer;
+}
+
+.post-title-cell {
+    font-weight: 500;
+    /* 🌟 게시글 내용 제목 텍스트 색상: 흰색 */
+    color: var(--header-text-color); 
+}
+
+/* 5. 모달 오버레이 및 폼 */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.85); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.inquiry-modal-content {
+    background: var(--modal-dark); 
+    color: var(--text-light);
+    padding: 30px;
+    border-radius: 10px;
+    width: 95%;
+    max-width: 600px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.inquiry-modal-content h3 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: var(--header-text-color); /* 모달 제목 */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-light); 
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #555;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 15px;
+    background-color: #333333; 
+    color: var(--text-light);
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+/* 제출 버튼 (녹색 계열, UI 통일) */
+.submit-button {
+    background-color: var(--success-green); 
+    color: white; 
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.submit-button:hover {
+    background-color: #4CAF50;
+}
+
+/* 취소 버튼 (다크 그레이 계열, UI 통일) */
+.cancel-button {
+    background-color: var(--secondary-gray); 
+    color: white; 
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s;
+}
+
+.cancel-button:hover {
+    background-color: #606060;
+}
+
+
+/* 6. 미디어 쿼리 (반응형 디자인) */
+@media (max-width: 768px) {
+    .inquiries-container {
+        width: 95%;
+        padding: 0 10px;
+    }
+
+    .page-title {
+        font-size: 1.8em;
+    }
+    
+    .controls-area {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-input, .write-button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .posts-table th, .posts-table td {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+}

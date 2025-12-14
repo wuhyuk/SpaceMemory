@@ -1,0 +1,70 @@
+/* src/Main.css */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #000; /* 전체 배경을 검정으로 설정하여 흰 테두리 제거 */
+  color: #ffffff;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-y: auto;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+.main-wrapper {
+  width: 100%;
+  min-height: calc(100vh);
+  background: #000; /* 옵션 A: 단색 검정 배경 */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+/* 헤더 높이만큼 여백을 줘서 헤더와 겹치지 않게 함 (헤더가 sticky인 경우) */
+.main-content {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 100px 6vw 60px; /* 상단 패딩으로 헤더 공간 확보 */
+  text-align: center;
+  color: #e6e9ff;
+}
+
+/* 제목 네온 느낌 유지 */
+.main-content h1 {
+  margin: 0 0 10px;
+  font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+  font-weight: 800;
+  color: #e6ebff;
+  text-shadow:
+    0 0 8px rgba(180, 190, 255, 0.8),
+    0 0 20px rgba(150, 170, 255, 0.6);
+}
+.main-content p {
+  margin: 0;
+  color: #c9cfff;
+  opacity: 0.9;
+}
+
+/* 공통 스크롤바 - 무채색/다크 그레이 톤 */
+.scrollable::-webkit-scrollbar {
+  width: 10px;
+}
+
+.scrollable::-webkit-scrollbar-track {
+  background: #181818;      /* 어두운 회색 (트랙) */
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background: #d6d6d6;         /* 중간 회색 (손잡이) */
+  border-radius: 5px;
+}
+
+.scrollable::-webkit-scrollbar-thumb:hover {
+  background: #acacac;         /* 밝은 회색 (호버 시) */
+}
